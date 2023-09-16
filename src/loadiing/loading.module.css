@@ -1,0 +1,9 @@
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+.loadingContainer > h1 {
+  font-size: 3.2rem;
+}

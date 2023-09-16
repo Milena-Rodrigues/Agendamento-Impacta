@@ -1,0 +1,17 @@
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { UserContext } from "../UserContext";
+
+const ProtectedRoute = ({ children, to }) => {
+  const { permission } = React.useContext(UserContext);
+  let permissionValue = permission;
+  if (window.localStorage.getItem("permission")) {
+    permissionValue = window.localStorage.getItem("permission");
+  }
+  if (permissionValue === null) {
+    return <Navigate to={to}></Navigate>;
+  }
+  return <div>{children}</div>;
+};
+
+export default ProtectedRoute;
