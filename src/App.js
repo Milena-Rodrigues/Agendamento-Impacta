@@ -4,6 +4,7 @@ import ProtectedRoute from "./protectedRoutes/ProtectedRoute";
 import { Signup } from "./login/singup";
 import Login from "./login/login";
 import Home from "./home";
+import ClientForm from "./login/client-form";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/client-form" element={<ClientForm />} />
           <Route
             path="/home"
             element={

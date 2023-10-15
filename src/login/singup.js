@@ -12,17 +12,33 @@ export const Signup = () => {
   };
   const [signupData, setSignupData] = useState(initialSignupData);
 
-  const handleNewStore = () => {
-    const confirmation = Promise.resolve(addNewStore(signupData));
-    confirmation.then(() => {
-      alert("Loja cadastrada com sucesso");
-    });
-  };
-
   const handleDataChange = (e) => {
     const { name, value } = e.target;
     setSignupData({ ...signupData, [name]: value });
   };
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    alert("Procurando\nPor favor aguarde...");
+
+    const confirmation = Promise.resolve(
+      addNewStore({
+        nomeEstabelecimento:signupData.nomeEstabelecimento,
+        nomeProfissional:signupData.nomeProfissional
+      })
+    );
+    confirmation
+      .then((axios) => {
+        console.log(axios);
+        const alerta = (!axios.data)  ? "Erro ao salvar.\n\nPor favor verifique seus dadoe e tente novamente."    : "Empresa salva com sucesso.";
+        alert(alerta);
+      })
+      .catch((error) => {
+        alert("Erro ao salvar a empresa.");
+        console.error("Erro ao salvar a empresa:", error);
+      });
+  };
+
 
   return (
     <div className="background-schedule">
@@ -31,7 +47,7 @@ export const Signup = () => {
           TENHA MAIS CONTROLE NO AGENDAMENTO DE CLIENTES
         </h1>
         <div className="box-login">
-          <form className="form-login" onSubmit={(e) => e.preventDefault()}>
+          <form className="form-login" onSubmit={handleSignup}>
             <h3>Cadastre-se</h3>
             <label htmlFor="nomeEstabelecimento">Nome da Empresa</label>
             <input
@@ -49,7 +65,7 @@ export const Signup = () => {
             <button
               type="submit"
               className="button-login"
-              onClick={handleNewStore}
+              onClick={handleSignup}
             >
               Cadastrar
             </button>

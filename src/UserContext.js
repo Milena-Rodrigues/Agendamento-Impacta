@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const auth = "83M01mhf41iaqKIq3nar3mFK393b019nmKkfomfc93m8aGqy2m";
-const apiURL = "localhost";
+const apiURL = "http://localhost:3000/swagger";
 const config = {
   headers: {
     Authorization: auth,

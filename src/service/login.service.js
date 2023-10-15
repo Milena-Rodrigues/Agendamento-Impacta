@@ -1,36 +1,45 @@
 import axios from "axios";
-const auth = "83M01mhff1iaqKIq3nar3mFK393b019nmKkfomfc93m8aGqy2mcb5nMuMC4";
-const apiURL = "localhost";
-const config = {
-  headers: {
-    Authorization: auth,
-  },
-};
+const apiURL = "http://localhost:3000";
+
+function generateUUID() {
+  var d = new Date().getTime();
+  var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now() * 1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = Math.random() * 16;
+    if (d > 0) {
+      r = (d + r) % 16 | 0;
+      d = Math.floor(d / 16);
+    } else {
+      r = (d2 + r) % 16 | 0;
+      d2 = Math.floor(d2 / 16);
+    }
+    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
+
+const generateStringSchedule = (date) => {
+  const schedule = new Date(date).toISOString()
+  return schedule.replace('Z', '')
+
+}
 
 export const findStoreByName = async (estabelecimento) => {
   const response = axios
     .get(
-      `${apiURL}/Estabelecimento/getByName?estabelecimento=${estabelecimento}`,
-      config
+      `${apiURL}/Estabelecimento/getByName?estabelecimento=${estabelecimento}`
     )
-    .then((res) => {
-      return res;
-    });
   return response;
 };
-
 export const findAllStores = async () => {
-  const response = axios
-    .get(`${apiURL}/Estabelecimento/getAll`, config)
-    .then((res) => {
-      return res;
-    });
+  const response = axios.get(`${apiURL}/Estabelecimento/getAll`).then((res) => {
+    return res;
+  });
   return response;
 };
 
 export const addNewStore = async (data) => {
   const response = axios
-    .post(`${apiURL}/Estabelecimento/addNewEstabelecimento`, data, config)
+    .post(`${apiURL}/Estabelecimento/addNewEstabelecimento`, data)
     .then((res) => {
       return res;
     });
@@ -38,11 +47,18 @@ export const addNewStore = async (data) => {
 };
 export const shutDownStore = async (storeId) => {
   const response = axios
-    .put(
-      `${apiURL}/Estabelecimento/DesativarEstabelecimento/${storeId}`,
-      {},
-      config
-    )
+    .put(`${apiURL}/Estabelecimento/DesativarEstabelecimento/${storeId}`, {})
+    .then((res) => {
+      return res;
+    });
+  return response;
+};
+
+export const addNewSchedule = async (data) => {
+  data.idAgendamento = generateUUID()
+  data.diaHoraAgendamento = generateStringSchedule(data.diaHora)
+  const response = axios
+    .post(`${apiURL}/Agendamento/addNewAgendamento`, data)
     .then((res) => {
       return res;
     });
