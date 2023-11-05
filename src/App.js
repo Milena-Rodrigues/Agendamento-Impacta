@@ -5,6 +5,7 @@ import { Signup } from "./login/singup";
 import Login from "./login/login";
 import Home from "./home";
 import ClientForm from "./login/client-form";
+import Schedule from "./components/schedule/schedule";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/client-form" element={<ClientForm />} />
+          <Route path="/schedule" element={<Schedule />} />
           <Route
             path="/home"
             element={
