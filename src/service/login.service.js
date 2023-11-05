@@ -26,6 +26,12 @@ const generateStringSchedule = (date) => {
   return schedule.replace("Z", "");
 };
 
+const setTimezoneManually = (dateTime) => {
+  const date = new Date(dateTime);
+  date.setHours(date.getHours() - 3);
+  return date;
+};
+
 export const findStoreByName = async (estabelecimento) => {
   const response = axios.get(
     `${apiURL}/Estabelecimento/getByName?estabelecimento=${estabelecimento}`
@@ -67,7 +73,9 @@ export const getAllSchedules = async (data) => {
 
 export const addNewSchedule = async (data) => {
   data.idAgendamento = generateUUID();
-  data.diaHoraAgendamento = generateStringSchedule(data.diaHora);
+  data.diaHoraAgendamento = generateStringSchedule(
+    setTimezoneManually(data.diaHora)
+  );
   const response = axios
     .post(`${apiURL}/Agendamento/addNewAgendamento`, data)
     .then((res) => {

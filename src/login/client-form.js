@@ -77,6 +77,7 @@ const ClientForm = (props) => {
           type="datetime-local"
           defaultValue={props.data || props.diaHora}
           onChange={({ target }) => {
+            console.log(`${target.value}:00`);
             setScheduleData({ ...scheduleData, diaHora: `${target.value}:00` });
           }}
         />
