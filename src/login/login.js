@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import "./Login.css";
 import { Circles } from "./circles";
-import { LinearProgress, Dialog, DialogContent, DialogContentText } from "@mui/material";
+import {
+  LinearProgress,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+} from "@mui/material";
 
-import Loading from "../components/loadingComponent/loadingComponent";
-import { findStoreByName, findAllStores } from "../service/login.service";
+import { findStoreByName } from "../service/login.service";
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -21,13 +25,6 @@ const Login = () => {
     setLoginData({ ...loginData, [name]: value });
   };
 
-  const handleAllStores = () => {
-    const confirmation = Promise.resolve(findAllStores());
-    confirmation.then((data) => {
-      console.log(data);
-    });
-  };
-
   const handleLogin = async (e) => {
     setLoading(true);
 
@@ -38,18 +35,17 @@ const Login = () => {
     confirmation
       .then((axios) => {
         setLoading(false);
-        console.log(axios);
-        const alerta = (!axios.data) ?
-          "Empresa não encontrada.\n\nPor favor verifique seus dadoe e tente novamente." :
-          "Empresa encontrada com sucesso,\nPor favor aguarde";
-        //alert(alerta);
-
-      }).catch((error) => {
-        setLoading(false)
+        const alerta = !axios.data
+          ? "Empresa não encontrada.\n\nPor favor verifique seus dadoe e tente novamente."
+          : "Empresa encontrada com sucesso,\nPor favor aguarde";
+      })
+      .catch((error) => {
+        setLoading(false);
         alert("Erro ao procurar a empresa.");
         console.error("Erro ao procurar a empresa:", error);
       });
-    navigate(`/client-form?estabelecimento=${loginData.nomeEstabelecimento}`);
+    sessionStorage.setItem("estabelecimento", loginData.nomeEstabelecimento);
+    navigate(`/schedule`);
   };
 
   return (
@@ -62,7 +58,9 @@ const Login = () => {
       >
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <div style={{ marginBottom: '20px' }}>Procurando Por favor aguarde...</div>
+            <div style={{ marginBottom: "20px" }}>
+              Procurando Por favor aguarde...
+            </div>
             <LinearProgress />
           </DialogContentText>
         </DialogContent>
@@ -73,7 +71,6 @@ const Login = () => {
             TENHA MAIS CONTROLE NO AGENDAMENTO DE CLIENTES
           </h1>
           <div className="box-login">
-
             <form className="form-login" onSubmit={handleLogin}>
               <h3>Acesse sua agenda!</h3>
               <label>
@@ -81,14 +78,16 @@ const Login = () => {
                 <input
                   name="nomeEstabelecimento"
                   value={loginData.nomeEstabelecimento}
-                  onChange={handleDataChange} />
+                  onChange={handleDataChange}
+                />
               </label>
               <label>
                 Nome do profissional
                 <input
                   name="nomeProfissional"
                   value={loginData.nomeProfissional}
-                  onChange={handleDataChange} />
+                  onChange={handleDataChange}
+                />
               </label>
               <button type="submit" className="button-login">
                 Entrar
@@ -102,7 +101,8 @@ const Login = () => {
         </div>
 
         <Circles />
-      </div></>
+      </div>
+    </>
   );
 };
 

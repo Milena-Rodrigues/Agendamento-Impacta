@@ -23,14 +23,15 @@ export const Signup = () => {
 
     const confirmation = Promise.resolve(
       addNewStore({
-        nomeEstabelecimento:signupData.nomeEstabelecimento,
-        nomeProfissional:signupData.nomeProfissional
+        nomeEstabelecimento: signupData.nomeEstabelecimento,
+        nomeProfissional: signupData.nomeProfissional,
       })
     );
     confirmation
       .then((axios) => {
-        console.log(axios);
-        const alerta = (!axios.data)  ? "Erro ao salvar.\n\nPor favor verifique seus dadoe e tente novamente."    : "Empresa salva com sucesso.";
+        const alerta = !axios.data
+          ? "Erro ao salvar.\n\nPor favor verifique seus dadoe e tente novamente."
+          : "Empresa salva com sucesso.";
         alert(alerta);
       })
       .catch((error) => {
@@ -38,7 +39,6 @@ export const Signup = () => {
         console.error("Erro ao salvar a empresa:", error);
       });
   };
-
 
   return (
     <div className="background-schedule">
