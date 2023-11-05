@@ -5,6 +5,8 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import bootstrap5Plugin from "@fullcalendar/bootstrap5";
 import timeGridPlugin from "@fullcalendar/timegrid";
+import momentTimezonePlugin from "@fullcalendar/moment-timezone";
+
 import * as bootstrap from "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -201,6 +203,8 @@ const Schedule = (props) => {
       <div style={{ padding: "50px" }}>
         <FullCalendar
           locale={"pt-br"}
+          currentTimezone={"America/Sao_Paulo"}
+          timeZone={"America/Sao_Paulo"}
           theme={true}
           themeSystem="Litera"
           headerToolbar={{
@@ -213,6 +217,7 @@ const Schedule = (props) => {
             interactionPlugin,
             timeGridPlugin,
             bootstrap5Plugin,
+            momentTimezonePlugin,
           ]}
           navLinks={true}
           editable={false}
